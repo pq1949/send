@@ -1,10 +1,11 @@
 const crypto = require('crypto');
-const geoip = require('fxa-geodb')();
+// const geoip = require('fxa-geodb')();
 const fetch = require('node-fetch');
 const config = require('./config');
 const pkg = require('../package.json');
 
 const HOUR = 1000 * 60 * 60;
+const NOSEND = true;
 
 function truncateToHour(timestamp) {
   return Math.floor(timestamp / HOUR) * HOUR;
@@ -21,12 +22,8 @@ function userId(fileId, ownerId) {
   return hash.digest('hex').substring(32);
 }
 
-function location(ip) {
-  try {
-    return geoip(ip);
-  } catch (e) {
-    return {};
-  }
+function location() {
+ return {}
 }
 
 function statUploadEvent(data) {
@@ -140,7 +137,7 @@ function clientEvent(event, ua, language, session_id, deltaT, platform, ip) {
 }
 
 async function sendBatch(events, timeout = 1000) {
-  if (!config.amplitude_id) {
+  if (!config.amplitude_id || NOSEND) {
     return 200;
   }
   try {

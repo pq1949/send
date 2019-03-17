@@ -60,7 +60,7 @@ class Account extends Component {
     const translate = this.state.translate;
     if (!this.local.loggedIn) {
       return html`
-        <send-account>
+        <send-account class="hidden">
           <button
             class="p-2 md:p-4 border rounded-lg text-blue-dark border-blue-dark hover:text-white hover:bg-blue-dark focus:outline"
             onclick="${e => this.login(e)}"
@@ -72,7 +72,7 @@ class Account extends Component {
       `;
     }
     return html`
-      <send-account class="relative h-8">
+      <send-account class="relative h-8 hidden">
         <input
           type="image"
           alt="${user.email}"

@@ -11,12 +11,12 @@ module.exports = function(state) {
         ${state.translate('downloadFinish')}
       </h1>
       <img src="${assets.get('completed.svg')}" class="my-12 h-48" />
-      <p class="text-grey-darkest leading-normal">
+      <p class="text-grey-darkest leading-normal hidden">
         ${state.translate('trySendDescription')}
       </p>
       <p class="my-5">
         <a href="/" class="btn rounded-lg flex items-center mt-4" role="button"
-          >${state.translate('sendYourFilesLink')}</a
+          >${state.translate('okButton')}</a
         >
       </p>
     </div>

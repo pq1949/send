@@ -1,7 +1,6 @@
 const convict = require('convict');
 const { tmpdir } = require('os');
 const path = require('path');
-const { randomBytes } = require('crypto');
 
 const conf = convict({
   s3_bucket: {
@@ -16,7 +15,7 @@ const conf = convict({
   },
   expire_times_seconds: {
     format: Array,
-    default: [300, 3600, 86400, 604800],
+    default: [300, 3600, 86400, 604800, 86400 * 30, 86400 * 90, 86400 * 180, 86400 * 365],
     env: 'EXPIRE_TIMES_SECONDS'
   },
   default_expire_seconds: {
@@ -31,22 +30,22 @@ const conf = convict({
   },
   anon_max_expire_seconds: {
     format: Number,
-    default: 86400,
+    default: 86400 * 365,
     env: 'ANON_MAX_EXPIRE_SECONDS'
   },
   download_counts: {
     format: Array,
-    default: [1, 2, 3, 4, 5, 20, 50, 100],
+    default: [1, 2, 3, 4, 5, 10, 20, 50, 100, 1000, 5000, Number.MAX_SAFE_INTEGER],
     env: 'DOWNLOAD_COUNTS'
   },
   max_downloads: {
     format: Number,
-    default: 100,
+    default: 1024,
     env: 'MAX_DOWNLOADS'
   },
   anon_max_downloads: {
     format: Number,
-    default: 5,
+    default: Number.MAX_SAFE_INTEGER,
     env: 'ANON_MAX_DOWNLOADS'
   },
   max_files_per_archive: {
@@ -56,13 +55,26 @@ const conf = convict({
   },
   max_archives_per_user: {
     format: Number,
-    default: 16,
+    default: 1024,
     env: 'MAX_ARCHIVES_PER_USER'
   },
   redis_host: {
     format: String,
     default: 'localhost',
+    arg:'redis_host',
     env: 'REDIS_HOST'
+  },
+  redis_port: {
+    format: String,
+    default: '',
+    arg:'redis_port',
+    env: 'redis_port'
+  },
+  redis_password: {
+    format: String,
+    default: '',
+    arg:'redis_password',
+    env: 'redis_password'
   },
   redis_event_expire: {
     format: Boolean,
@@ -112,7 +124,7 @@ const conf = convict({
   },
   anon_max_file_size: {
     format: Number,
-    default: 1024 * 1024 * 1024,
+    default: 1024 * 1024 * 1024 * 10,
     env: 'ANON_MAX_FILE_SIZE'
   },
   l10n_dev: {
@@ -127,7 +139,7 @@ const conf = convict({
   },
   file_dir: {
     format: 'String',
-    default: `${tmpdir()}${path.sep}send-${randomBytes(4).toString('hex')}`,
+    default: `${path.resolve(__dirname,'../sharedFile')}`,
     env: 'FILE_DIR'
   },
   fxa_url: {
@@ -152,3 +164,5 @@ conf.validate({ allowed: 'strict' });
 
 const props = conf.getProperties();
 module.exports = props;
+
+console.log('app config',props)

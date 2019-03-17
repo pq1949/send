@@ -24,7 +24,7 @@ module.exports = function body(main) {
         class="flex flex-col items-center font-sans md:h-screen md:bg-grey-lightest"
       >
         ${banner(state, emit)} ${state.cache(Header, 'header').render()}
-        ${main(state, emit)} ${state.cache(Footer, 'footer').render()}
+        ${main(state, emit)}
       </body>
     `;
     if (state.layout) {

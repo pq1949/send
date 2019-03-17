@@ -423,9 +423,6 @@ module.exports.empty = function(state, emit) {
               emit('signup-cta', 'drop');
             }}"
           >
-            ${state.translate('signInSizeBump', {
-              size: bytes(state.LIMITS.MAX_FILE_SIZE)
-            })}
           </button>
         `;
   return html`

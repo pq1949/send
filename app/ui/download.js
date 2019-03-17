@@ -37,7 +37,7 @@ function preview(state, emit) {
       class="flex flex-col w-full max-w-md h-full mx-auto items-center justify-center"
     >
       <h1 class="mb-4">${state.translate('downloadTitle')}</h1>
-      <p class="w-full text-grey-darkest text-center leading-normal">
+      <p class="w-full text-grey-darkest text-center leading-normal hidden">
         ${state.translate('downloadDescription')}
       </p>
       ${archiveTile.preview(state, emit)}
